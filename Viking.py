@@ -14,14 +14,15 @@ class Viking:
         
         # animations:
         self.idle = self.select(0, 7)
-        # self.run = self.select(1, 6)
-        # self.jump = self.select(2, 5)
-        # self.attack = self.select(3, 9)
-        # self.shield = self.select(4, 9)
-        # self.die = self.select(5, 9)
+        self.run = self.select(1, 6)
+        self.jump = self.select(2, 5)
+        self.attack = self.select(3, 9)
+        self.shield = self.select(4, 9)
+        self.die = self.select(5, 9)
         
         
         self.set_animation(self.idle, loop=True)
+        self.finished = False # have we gotten to the last frame?
                 
                 
     def select(self, row, columns, w=32, h=32):
@@ -48,6 +49,8 @@ class Viking:
     
     def animate(self):
         self.index += self.speed
+            
+        
     
     
     def update(self):
@@ -59,14 +62,16 @@ class Viking:
     def show(self):
         # in order to get what frame of the animation, we need to get the index.
         index = floor(self.index) % self.frames
+        if index > self.frames:
+            self.finished = True
         picture = self.animation[index]
         picture.resize(216, 216)
-        # if not self.facing_left:
-        image(picture, self.pos.x, self.pos.y)
-        # else:
-        #     pushMatrix()
-        #     translate(self.pos.x, self.pos.y)
-        #     scale(-1, 1)
-        #     image(picture, 0, 0)
-        #     popMatrix()
+        if not self.facing_left:
+            image(picture, self.pos.x, self.pos.y)
+        else:
+            pushMatrix()
+            translate(self.pos.x, self.pos.y)
+            scale(-1, 1)
+            image(picture, 0, 0)
+            popMatrix()
     

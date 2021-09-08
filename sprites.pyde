@@ -36,11 +36,33 @@ def setup():
 def draw():
     global victor
     background(0)
+    fill(50, 45, 97)
+    rect(-60, 260, 820, 300)
     victor.animate()
+    if victor.pos.y < height/2:
+        victor.pos.y = height/2
     victor.update()
     victor.show()
     
     
-    
+def keyPressed():
+    global victor
+    if key == 'a':
+        victor.vel = PVector(-4, 0)
+        victor.set_animation(victor.run, True)
+        victor.facing_left = True
+    if key == 'd':
+        victor.vel = PVector(4, 0)
+        victor.set_animation(victor.run, True)
+        victor.facing_left = False
+    if key == ' ':
+        victor.vel = PVector(0, 0)
+        victor.set_animation(victor.jump, False)
+        
+def keyReleased():
+    global victor
+    if key == 'a' or key == 'd':
+        victor.vel = PVector(0, 0)
+        victor.set_animation(victor.idle, True)
     
     
