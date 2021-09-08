@@ -7,9 +7,9 @@
 # . version comments
 # . shell with setup, background
 # . create Viking class with particle code including apply_force
-# idle animation: loadImage, spritesheet.get
-# idle animation: Viking.index, .frames, %
-# keyboard input: A, D
+# . idle animation: loadImage, spritesheet.get
+# . idle animation: Viking.index, .frames, %
+# keyboard input: A, D with run animation
 # mirroring for moving left and right
 # methods to create the other 5 animations stored in Viking class
 # looping vs not looping animations
@@ -30,14 +30,13 @@ def setup():
     colorMode(HSB, 360, 100, 100, 100)
     spritesheet = loadImage("viking.png")
     size(700, 300)
-    victor = Viking(spritesheet, width/2, 64, 0.1)
+    victor = Viking(spritesheet, width/2, height/2, 0.1)
     
 
 def draw():
     global victor
     background(0)
-    gravity = PVector(0, 0.1)
-    victor.apply_force(gravity)
+    victor.animate()
     victor.update()
     victor.show()
     
