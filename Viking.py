@@ -23,6 +23,11 @@ class Viking:
         
         self.set_animation(self.idle, loop=True)
         self.finished = False # have we gotten to the last frame?
+        
+        
+    # sets the position; setter method for position
+    def set_pos(self, pos):
+        self.pos = pos
                 
                 
     def select(self, row, columns, w=32, h=32):
@@ -39,6 +44,8 @@ class Viking:
         # how do we know how many frames there are? If we don't, then we
         # will get an IndexError in Show.
         self.frames = len(self.animation)
+        if self.animation != self.run:
+            self.index = 0
     
     
     # How do we apply a force?
@@ -48,7 +55,11 @@ class Viking:
         
     
     def animate(self):
-        self.index += self.speed
+        if self.loop:
+            self.index += self.speed
+        else:
+            if not self.finished:
+                self.index += self.speed
             
         
     
@@ -56,6 +67,8 @@ class Viking:
     def update(self):
         self.vel.add(self.acc)
         self.pos.add(self.vel)
+        
+        self.pos.y = constrain(self.pos.y, 0, height/2)
         self.acc = PVector(0, 0)
         
         

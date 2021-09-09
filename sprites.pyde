@@ -9,9 +9,9 @@
 # . create Viking class with particle code including apply_force
 # . idle animation: loadImage, spritesheet.get
 # . idle animation: Viking.index, .frames, %
-# keyboard input: A, D with run animation
-# mirroring for moving left and right
-# methods to create the other 5 animations stored in Viking class
+# . keyboard input: A, D with run animation
+# . mirroring for moving left and right
+# . create the other 4 animations stored in Viking class and fix 
 # looping vs not looping animations
 # gravity and jumping
 # ...
@@ -30,17 +30,17 @@ def setup():
     colorMode(HSB, 360, 100, 100, 100)
     spritesheet = loadImage("viking.png")
     size(700, 300)
-    victor = Viking(spritesheet, width/2, height/2, 0.1)
+    victor = Viking(spritesheet, width/2, 0, 0.1)
     
 
 def draw():
     global victor
     background(0)
-    fill(50, 45, 97)
-    rect(-60, 260, 820, 300)
+    fill(50, 47, 107)
+    rect(-60, height/2 + 110, 820, 300)
+    gravity = PVector(0, 9.8/frameRate)
+    victor.apply_force(gravity)
     victor.animate()
-    if victor.pos.y < height/2:
-        victor.pos.y = height/2
     victor.update()
     victor.show()
     
@@ -56,13 +56,20 @@ def keyPressed():
         victor.set_animation(victor.run, True)
         victor.facing_left = False
     if key == ' ':
-        victor.vel = PVector(0, 0)
+        victor.vel = PVector(0, -4)
         victor.set_animation(victor.jump, False)
+    if key == 'A':
+        victor.vel = PVector(0, 0)
+        victor.set_animation(victor.attack, False)
+    if key == 'D':
+        victor.set_animation(victor.die, False)
+    if key == 's':
+        victor.vel = PVector(0, 0)
+        victor.set_animation(victor.shield, False)
         
 def keyReleased():
     global victor
     if key == 'a' or key == 'd':
         victor.vel = PVector(0, 0)
         victor.set_animation(victor.idle, True)
-    
     
