@@ -42,34 +42,38 @@ def draw():
     victor.apply_force(gravity)
     victor.animate()
     victor.update()
+    victor.edges()
     victor.show()
     
     
 def keyPressed():
     global victor
     if key == 'a':
-        victor.vel = PVector(-4, 0)
+        victor.acc = PVector(-4, 0)
         victor.set_animation(victor.run, True)
         victor.facing_left = True
     if key == 'd':
-        victor.vel = PVector(4, 0)
+        victor.acc = PVector(4, 0)
         victor.set_animation(victor.run, True)
         victor.facing_left = False
-    if key == ' ':
-        victor.vel = PVector(0, -4)
+    if key == ' ' and victor.is_not_in_the_air():
+        victor.acc = PVector(0, -4)
         victor.set_animation(victor.jump, False)
     if key == 'A':
-        victor.vel = PVector(0, 0)
+        victor.acc = PVector(0, 0)
         victor.set_animation(victor.attack, False)
     if key == 'D':
+        victor.acc = PVector(0, 0)
+        victor.vel = PVector(0, 0)
         victor.set_animation(victor.die, False)
     if key == 's':
+        victor.acc = PVector(0, 0)
         victor.vel = PVector(0, 0)
         victor.set_animation(victor.shield, False)
         
 def keyReleased():
     global victor
     if key == 'a' or key == 'd':
-        victor.vel = PVector(0, 0)
+        victor.acc = PVector(0, 0)
         victor.set_animation(victor.idle, True)
     
